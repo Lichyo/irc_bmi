@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-void main() => runApp(const BMI());
+void main() => runApp(
+      const MaterialApp(
+        home: BMI(),
+      ),
+    );
 
 class BMI extends StatefulWidget {
   const BMI({super.key});
@@ -240,24 +244,57 @@ class _BMIState extends State<BMI> {
                 ],
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: OutlinedButton(
-                  onPressed: () {
-                    final double bmi =
-                        weight / ((height / 100) * (height / 100));
-                    print('weight: $weight');
-                    print('height: ${height.round()}');
-                    print('BMI: ${bmi.round()}');
-                  },
-                  child: const SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      'CALCULATE',
-                      style: TextStyle(fontSize: 20.0),
-                      textAlign: TextAlign.center,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: OutlinedButton(
+                onPressed: () {
+                  final double bmi = weight / ((height / 100) * (height / 100));
+                  print('weight: $weight');
+                  print('height: ${height.round()}');
+                  print('BMI: ${bmi.round()}');
+                  showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Ok'),
+                        ),
+                      ],
+                      title: const Text(
+                        'Calculation',
+                      ),
+                      content: Container(
+                        height: 100,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'weight: $weight',
+                              style: const TextStyle(fontSize: 20.0),
+                            ),
+                            Text(
+                              'height: ${height.round()}',
+                              style: const TextStyle(fontSize: 20.0),
+                            ),
+                            Text(
+                              'BMI: ${bmi.round()}',
+                              style: const TextStyle(fontSize: 20.0),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
+                  );
+                },
+                child: const SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'CALCULATE',
+                    style: TextStyle(fontSize: 20.0),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
